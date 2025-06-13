@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Legal Assistant</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --primary-light: #e0e7ff;
+            --text-primary: #111827;
+            --text-secondary: #4b5563;
+            --bg-color: #f3f4f6;
+            --white: #ffffff;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa 0%, #80deea 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 450px;
+            width: 90%;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s forwards;
+            position: relative;
+            z-index: 1;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .logo svg {
+            color: var(--primary-color);
+        }
+        
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+            outline: none;
+        }
+        
+        .password-wrapper {
+            position: relative;
+        }
+        
+        .toggle-password {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-text {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0;
+            font-size: 0.875rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .btn-text:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+        
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .custom-checkbox {
+            position: relative;
+            cursor: pointer;
+            font-size: 1rem;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: relative;
+            height: 20px;
+            width: 20px;
+            background-color: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .custom-checkbox:hover input ~ .checkmark {
+            border-color: var(--primary-color);
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: var(--white);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .social-btn:hover {
+            background-color: var(--bg-color);
+            transform: translateY(-2px);
+        }
+        
+        .social-btn:active {
+            transform: translateY(0);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--text-secondary);
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .divider::before {
+            margin-right: 0.5rem;
+        }
+        
+        .divider::after {
+            margin-left: 0.5rem;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+        }
+        
+        .auth-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-left: 3px solid var(--danger);
+        }
+        
+        .alert i {
+            font-size: 1.1rem;
+        }
+        
+        #errorAlert {
+            display: none;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+                padding: 1.5rem;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 3H6l4 12h2M16 3h2l-4 12h-2"/>
+                <path d="M12 3v18"/>
+                <path d="M3 9v6"/>
+                <path d="M21 9v6"/>
+            </svg>
+            <span class="logo-text">Legal Assistant</span>
+        </div>
+        
+        <h2>Welcome Back</h2>
+        
+        <div id="errorAlert" class="alert alert-danger">
+            <i class="fas fa-exclamation-circle"></i>
+            <span id="errorMessage">Invalid username or password. Please try again.</span>
+        </div>
+        
+        <form id="loginForm" action="processLogin.jsp" method="post">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="remember-me" name="remember-me">
+                    <span class="checkmark"></span>
+                    Remember me
+                </label>
+                
+                <a href="reset-password.html" class="btn-text">Forgot Password?</a>
+            </div>
+            
+            <button type="submit" class="btn">
+                <span>Sign In</span>
+                <i class="fas fa-sign-in-alt"></i>
+            </button>
+        </form>
+        
+        <div class="divider">OR</div>
+        
+        <div class="social-login">
+            <button type="button" class="social-btn" onclick="alert('Google sign-in not implemented yet.')">
+                <i class="fab fa-google"></i>
+                <span>Google</span>
+            </button>
+            <button type="button" class="social-btn" onclick="alert('Facebook sign-in not implemented yet.')">
+                <i class="fab fa-facebook-f"></i>
+                <span>Facebook</span>
+            </button>
+        </div>
+        
+        <div class="auth-footer">
+            Don't have an account? <a href="signup.html" class="auth-link">Sign Up</a>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const errorAlert = document.getElementById('errorAlert');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Check if there's an error parameter in the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const error = urlParams.get('error');
+            if (error === 'invalid') {
+                errorAlert.style.display = 'flex';
+            }
+            
+            // Toggle password visibility
+            const togglePasswordButton = document.querySelector('.toggle-password');
+            togglePasswordButton.addEventListener('click', function() {
+                const passwordInput = document.getElementById('password');
+                const icon = this.querySelector('i');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+            
+            // Basic form validation
+            loginForm.addEventListener('submit', function(event) {
+                const usernameInput = document.getElementById('username');
+                const passwordInput = document.getElementById('password');
+                
+                if (usernameInput.value.trim() === '' || passwordInput.value.trim() === '') {
+                    event.preventDefault();
+                    errorAlert.style.display = 'flex';
+                    errorMessage.textContent = 'Please enter both username and password.';
+                }
+            });
+            
+            // Particles animation (decorative effect)
+            function createParticle() {
+                const particles = document.createElement('div');
+                particles.classList.add('particles');
+                document.body.appendChild(particles);
+                
+                for (let i = 0; i < 30; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.position = 'absolute';
+                    particle.style.width = Math.random() * 10 + 'px';
+                    particle.style.height = particle.style.width;
+                    particle.style.backgroundColor = `rgba(${Math.floor(Math.random() * 100) + 155}, ${Math.floor(Math.random() * 100) + 155}, 255, 0.${Math.floor(Math.random() * 5) + 3})`;
+                    particle.style.borderRadius = '50%';
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.top = Math.random() * 100 + 'vh';
+                    particle.style.animation = `float ${Math.random() * 10 + 5}s linear infinite`;
+                    particles.appendChild(particle);
+                }
+                
+                // Add CSS animation for floating
+                const style = document.createElement('style');
+                style.innerHTML = `
+                    @keyframes float {
+                        0% {
+                            transform: translateY(0) translateX(0);
+                            opacity: 0;
+                        }
+                        50% {
+                            opacity: 0.8;
+                        }
+                        100% {
+                            transform: translateY(-100px) translateX(${Math.random() * 100 - 50}px);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            // Uncomment to add particle animation effect
+            // createParticle();
+        });
+    </script>
+</body>
+</html>
