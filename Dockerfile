@@ -1,14 +1,10 @@
-# 👉 Base image with Tomcat + JDK 17
-FROM tomcat:9.0-jdk17-temurin
+FROM tomcat:9.0.85-jdk17
 
-# 🧹 Throw away default Tomcat examples
+# Clean default apps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# 🚀 Copy your built WAR into Tomcat and call it ROOT.war
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Copy your WAR
+COPY ./legalassist.war /usr/local/tomcat/webapps/legalassist.war
 
-# 🌐 Tomcat listens on 8080; Render will expose it automatically
 EXPOSE 8080
-
-# 🏃 Start Tomcat
 CMD ["catalina.sh", "run"]
